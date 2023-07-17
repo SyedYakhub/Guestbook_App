@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: frontend-deployment
+spec:
+ replicas: 3
+ selector:
+  matchLabels:
+    app: frontend_app
+    type: frontend
+ template:
+  metadata:
+    name: frontend_pod
+    labels:
+      app: frontend_app
+      type: frontend
+  spec:
+   containers:
+     - image: gcr.io/google-samples/gb-frontend:v4
+       name: php-redis-nautilus
+       ports:
+        - containerPort: 80
+       resources:
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+       env:
+        - name: GET_HOSTS_FROM
+          value: dns
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: frontend
+spec:
+ type: NodePort
+ ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30009
+ selector:
+  app: nodeport_app

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: redis-slave
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+    app: redis_slave_app
+    type: backend
+ template:
+  metadata:
+    name: redis_slave_pod
+    labels:
+     app: redis_slave_app
+     type: backend
+  spec:
+   containers:
+     - image: gcr.io/google_samples/gb-redisslave:v3
+       name: slave-redis-nautilus
+       resources:
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+       ports:
+         - containerPort: 6379
+       env:
+         - name: GET_HOSTS_FROM
+           value: dns
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: redis-slave
+spec:
+  type: ClusterIP
+  ports:
+   - port: 6379
+     targetPort: 6379
+  selector:
+    app: redis_slave_app
