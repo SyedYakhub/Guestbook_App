@@ -17,7 +17,7 @@ spec:
   spec:
    containers:
      - image: gcr.io/google-samples/gb-frontend:v4
-       name: php-redis-nautilus
+       name: php-redis-devops
        ports:
         - containerPort: 80
        resources:

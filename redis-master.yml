@@ -17,7 +17,7 @@ spec:
    spec:
     containers:
       - image: redis
-        name: master-redis-nautilus
+        name: master-redis-devops
         resources:
          requests:
            memory: "100Mi"

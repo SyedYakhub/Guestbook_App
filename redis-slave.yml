@@ -17,7 +17,7 @@ spec:
   spec:
    containers:
      - image: gcr.io/google_samples/gb-redisslave:v3
-       name: slave-redis-nautilus
+       name: slave-redis-devops
        resources:
         requests:
           cpu: "100m"
